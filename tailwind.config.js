@@ -7,4 +7,10 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
   ],
+    safelist: [
+        {
+            pattern: /col-span-+/,
+            variants: ['sm'],
+        }
+    ],
 }

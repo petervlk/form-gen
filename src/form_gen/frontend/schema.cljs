@@ -12,32 +12,35 @@
   [:map
    [:first-name
     (-> NonEmptyString
-        (mu/update-properties assoc :ui/label "First Name")
+        (mu/update-properties assoc :ui/render true)
         (mu/update-properties assoc :ui/col-span 3))]
    [:last-name
     (-> NonEmptyString
-        (mu/update-properties assoc :ui/label "Last Name")
+        (mu/update-properties assoc :ui/render true)
         (mu/update-properties assoc :ui/col-span 3)
         (mu/update-properties assoc :ui/continue-row? true))]
    [:email
     (-> Email
+        (mu/update-properties assoc :ui/render true)
         (mu/update-properties assoc :ui/label "Email Address")
         (mu/update-properties assoc :ui/input-type "email")
         (mu/update-properties assoc :ui/col-span 4))]
    [:street-address
     (-> NonEmptyString
-        (mu/update-properties assoc :ui/label "Street address"))]
+        (mu/update-properties assoc :ui/render true))]
    [:city
     (-> NonEmptyString
-        (mu/update-properties assoc :ui/label "Last Name")
+        (mu/update-properties assoc :ui/render true)
         (mu/update-properties assoc :ui/col-span 2))]
    [:region
     (-> NonEmptyString
+        (mu/update-properties assoc :ui/render true)
         (mu/update-properties assoc :ui/label "State / Province")
         (mu/update-properties assoc :ui/col-span 2)
         (mu/update-properties assoc :ui/continue-row? true))]
    [:postal-code
     (-> NonEmptyString
+        (mu/update-properties assoc :ui/render true)
         (mu/update-properties assoc :ui/label "ZIP / Postal code")
         (mu/update-properties assoc :ui/col-span 2)
         (mu/update-properties assoc :ui/continue-row? true))]])

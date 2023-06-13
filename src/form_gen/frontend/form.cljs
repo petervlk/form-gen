@@ -1,30 +1,14 @@
 (ns form-gen.frontend.form
   (:require
+   [form-gen.frontend.gen-util :as gen]
    [fork.re-frame :as fork]
    [re-frame.core :as rf]
    [malli.core :as m]
-   [malli.error :as me]
-   [malli.util :as mu]))
-
-(defn filter-namespaced
-  [m ns-prefix]
-  (into {} (filter (fn [kv] (= (name ns-prefix) (namespace (key kv)))) m)))
-
-(defn schema->form-inputs
-  [schema]
-  (->> schema
-       mu/subschemas
-       (filter (comp :ui/label m/properties :schema))
-       (map (juxt (comp last :path) (comp m/properties m/form :schema)))
-       (map (fn [[id schema-props]] (-> schema-props
-                                        (filter-namespaced :ui)
-                                        (assoc :ui/id id))))))
+   [malli.error :as me]))
 
 (rf/reg-event-fx
  :submit-handler
  (fn [{db :db} [_ {:keys [values _dirty path]}]]
-    ;; dirty tells you whether the values have been touched before submitting.
-    ;; Its possible values are nil or a map of changed values
    {:db             (fork/set-submitting db path true)
     :dispatch-later [{:ms       1000
                       :dispatch [:resolved-form path values]}]}))
@@ -120,7 +104,7 @@
       "Use a permanent address where you can receive mail."]
      [:div
       {:class ["mt-10" "grid" "grid-cols-1" "gap-x-6" "gap-y-8" "sm:grid-cols-6"]}
-      (for [ui-data (schema->form-inputs form-schema)]
+      (for [ui-data (gen/schema->form-inputs form-schema)]
         ^{:key (:ui/id ui-data)}
         [form-input fork-data ui-data])]]]
    [:div

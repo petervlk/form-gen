@@ -54,3 +54,17 @@ Form-Gen is a personal pet project written in ClojureScript, aimed at experiment
 
 3. Access the app in your web browser at `http://localhost:9090`.
 
+## Generate form
+
+The focus of this project is to generate a form based of a simple `[:map]` schema. Have not tested nor attempted to implement more complex structures.   
+
+Consider schema defined [here](src/form_gen/frontend/schema.cljs). Individual key schemas have schema properties specified. It is possible to configure form layout, label and whether the schema key should be part of the generated form. 
+
+List of properties recognized by form-gen: such as :
+Schema property | Description | Default behaviour
+--|--|--
+:ui/render | If this property value is set to `true` the schema key will be part of generated form. | If unspecified, key will not be part of the generated form.
+:ui/input-type | Defined type of form input value. | Default value is `text` 
+:ui/label | Specifies the label of form input. | If undefined key name will be capitalized and used as a label. Example `:first-name` -> "First Name"
+:ui/col-span | Form is displayed in grid. This value defines number of cols the generated input will be spanning. | If undefined schema will span an entire row.
+:ui/continue-row? | Every schema is placed at the start of a new row. If this value is set to `true` schema will try to fit itself to remaining columns of the row left unoccupied by previous schema. | If unspecified schema will be rendered on the start of a new row. 
